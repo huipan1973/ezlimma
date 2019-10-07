@@ -5,7 +5,7 @@
 #'
 #' @param phenotype Numeric vector of sample characteristics (e.g. phenotypes or treatments). 
 #' Should be same length as \code{ncol(object)}.
-#' @param prefix Character string to add to beginning of column names.
+#' @param prefix Character string to add to beginning of column names. \code{NULL} does not add a prefix.
 #' @param coef Column index or column name of the linear model to test, passed to \code{\link{eztoptab}}.
 #' @param reorder.rows Logical, should rows be reordered by p-value?
 #' @param reduce.df Number degrees of freedom to subtract from residual. This may be necessary if 
@@ -25,6 +25,7 @@
 limma_cor <- function(object, phenotype=NULL, design=NULL, prefix=NULL, weights=NA, trend=FALSE, block=NULL, correlation=NULL,
                       adjust.method="BH", coef=2, reorder.rows=TRUE, moderated=TRUE, reduce.df=0, check.names=TRUE,
                       cols=c("AveExpr", "P.Value", "adj.P.Val", "logFC")){
+  
    stopifnot(all(is.na(weights)) || is.null(weights) || dim(weights)==dim(object) || length(weights)==nrow(object) || 
              length(weights)==ncol(object), is.numeric(reduce.df), reduce.df >= 0, is.null(phenotype)!=is.null(design), 
              moderated || !trend)
@@ -37,7 +38,8 @@ limma_cor <- function(object, phenotype=NULL, design=NULL, prefix=NULL, weights=
     design <- stats::model.matrix(~1+phenotype)
   } else {
     #if pheno is NULL, design was given
-    stopifnot(is.numeric(design[,2]))
+    # pheno could be in first column if not intercept
+    stopifnot(is.numeric(design))
   }
   
   if (length(weights)!=1 || !is.na(weights)){

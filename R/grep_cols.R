@@ -8,7 +8,9 @@
 
 # cannot set defaults, since xor
 grep_cols <- function(tab, p.cols=NULL, stat.cols=NULL){
-  stopifnot(xor(is.null(p.cols), is.null(stat.cols)))
+  stopifnot(xor(is.null(p.cols), is.null(stat.cols)), !all(is.numeric(p.cols)) || all(p.cols %in% 1:ncol(tab)),  
+            !all(is.numeric(stat.cols)) || all(stat.cols %in% 1:ncol(tab)), !is.null(colnames(tab)))
+  
   if (!is.null(p.cols)){
     if (is.numeric(p.cols)){
       colnms <- colnames(tab)[p.cols]

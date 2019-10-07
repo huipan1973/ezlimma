@@ -20,7 +20,7 @@ Should be same length as \code{ncol(object)}.}
 \item{design}{Design matrix of the experiment, with rows corresponding to samples and columns to coefficients to be 
 estimated.}
 
-\item{prefix}{Character string to add to beginning of column names.}
+\item{prefix}{Character string to add to beginning of column names. \code{NULL} does not add a prefix.}
 
 \item{weights}{Non-negative observation weights. Can be a numeric matrix of individual weights of same size as the 
 \code{object}, or a numeric vector of sample weights with length \code{ncol(object)}, or a numeric vector of gene 
@@ -51,9 +51,9 @@ returned by \code{\link[limma]{lmFit}}.}
 
 \item{check.names}{Logical; should \code{names(phenotype)==rownames(object)} be checked?}
 
-\item{cols}{Columns of \code{topTable} output to include. Possibilities include \code{"logFC", "AveExpr", "t", "P.Value",
-"adj.P.Val", "B"}. Some of these column names are then changed here. If \code{logFC} is specified, \code{FC} will 
-automatically also be given.}
+\item{cols}{Columns of \code{topTable} output to include. Possibilities include 
+\code{"logFC", "AveExpr", "z", "t", "P.Value", "adj.P.Val", "B"}. Some of these column names are then changed here. 
+If \code{logFC} is specified, \code{FC} will automatically also be given.}
 }
 \value{
 Data frame.
